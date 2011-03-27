@@ -1,0 +1,10 @@
+Project GURUHA
+
+GURUHA is an acronimous from GURPS RUles HAcks. It's a java programming API to 
+abstract the GURPS rules, intented to be used in programs capables to aid any
+kind of GM or player to build up adventures, characters, roll dices, simulate 
+GURPS combat, play on-line, etc.
+
+The current version is on alpha release and have a few features yet.
+
+
