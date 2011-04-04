@@ -1,0 +1,9 @@
+.classpath
+.gitignore
+.project
+bin
+build
+dist
+lib
+tests-build
+tests-jar

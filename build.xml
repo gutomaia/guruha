@@ -5,8 +5,6 @@
 	<property name="dist.dir" value="dist"/>
 	<property name="lib.dir" value="lib"/>
 	<property name="doc.dir" value="javadoc"/>
-	<property name="tools.dir" value="tools"/>
-	<property name="tools.bin.dir" value="tools-bin"/>
 	<property name="tests.src.dir" value="tests"/>
 	<property name="tests.build.dir" value="tests-build"/>
 	<property name="tests.jar.dir"  value="tests-jar"/>
@@ -36,10 +34,6 @@
 
 	<target name="clean-docs">
         	<delete dir="${doc.dir}"/>
-	</target>
-
-	<target name="clean-tools">
-        	<delete dir="${tools.bin.dir}"/>
 	</target>
 
 	<target name="compile" depends="clean">
@@ -92,16 +86,6 @@
 	        </junit>
 	</target>
 
-	<target name="tools" depends="dist,clean-tools">
-	        <mkdir dir="${tools.bin.dir}"/>
-		<javac includeantruntime="false" srcdir="${tools.dir}" destdir="${tools.bin.dir}">
-			<classpath>
-				<path refid="build-classpath"/>
-				<path refid="application-classpath"/>
-			</classpath>
-		</javac>
-	</target>
-
-	<target name="all" depends="tests,tools,docs"/>
+	<target name="all" depends="tests,docs"/>
 
 </project>
