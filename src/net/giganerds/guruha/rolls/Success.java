@@ -19,26 +19,80 @@ import net.giganerds.guruha.commons.SuccessLevel;
  */
 public class Success {
     
-    public final static boolean SUCCESSFUL    = true;
+    /**
+     * Global for a success roll.
+     */
+    private final static boolean SUCCESSFUL    = true;
     
-    public final static boolean UNSUCCESSFUL  = false;
+    /**
+     * Global for a failed roll.
+     */
+    private final static boolean UNSUCCESSFUL  = false;
     
-    private final Integer       level;
+    /**
+     * The level to be tested against.
+     */
+    private final Integer        level;
     
-    private final Roll          roll;
+    /**
+     * The rolled dices and modifiers.
+     */
+    private final Roll           roll;
     
-    private boolean             allowLowLevel = false;
+    /**
+     * If is permited roll in levels less than 3.
+     */
+    private boolean              allowLowLevel = false;
     
-    private Boolean             isSuccessful  = null;
+    /**
+     * If it was well succeed or not.
+     */
+    private Boolean              isSuccessful  = null;
     
-    private SuccessLevel        successLevel  = null;
+    /**
+     * The success level class.
+     */
+    private SuccessLevel         successLevel  = null;
     
+    /**
+     * Creates a new success.
+     * 
+     * @param level
+     *            The level to be tested against.
+     * @param roll
+     *            The dice roll and modifiers.
+     */
     public Success(Integer level, Roll roll) {
         this.level = level;
         this.roll = roll;
         setSuccess();
     }
     
+    /**
+     * Check the success level and successfulness.
+     * <p>
+     * This is based on rules for success tests in ....
+     * </p>
+     * <p>
+     * If the level is bellow 3, general tests cannot be done, unless this test
+     * is a active defense
+     * </p>
+     * <p>
+     * If a 3 or 4 is rolled, its a critical success. The same is true if is
+     * rolled 5 on a test against 15 or 5 or 6 in a test againts 16.
+     * </p>
+     * <p>
+     * If a 18 is rolled, its a critical failure. The same is true if is rolled
+     * 17 on a test against 15 or less.
+     * </p>
+     * <p>
+     * If roll a value above the level, it's a failure. The same is true if is
+     * rolled 17 and the level is above 15.
+     * </p>
+     * <p>
+     * If roll a value bellow or equal the level.
+     * </p>
+     */
     private void setSuccess() {
         if (!allowLowLevel && level < 3) {
             successLevel = SuccessLevel.INVALID;
@@ -46,28 +100,25 @@ public class Success {
         } else {
             Integer rollResult = roll.getResult();
             
-            if ((rollResult == 3) || (rollResult == 4)
-                    || (rollResult == 5 && level == 15)
-                    || (rollResult <= 6 && level >= 16)) {
+            if (isCriticalSuccess(rollResult)) {
                 isSuccessful = SUCCESSFUL;
                 successLevel = SuccessLevel.CRITICAL_SUCCESS;
                 return;
             }
             
-            if ((rollResult == 18) || (rollResult == 17 && level <= 15)
-                    || (rollResult >= (level + 10))) {
+            if (isCriticalFailure(rollResult)) {
                 isSuccessful = UNSUCCESSFUL;
                 successLevel = SuccessLevel.CRITICAL_FAILURE;
                 return;
             }
             
-            if (((rollResult == 17) && (level >= 16)) || rollResult > level) {
+            if (isFailure(rollResult)) {
                 isSuccessful = UNSUCCESSFUL;
                 successLevel = SuccessLevel.FAILURE;
                 return;
             }
             
-            if (rollResult <= level) {
+            if (isSuccess(rollResult)) {
                 isSuccessful = SUCCESSFUL;
                 successLevel = SuccessLevel.SUCCESS;
                 return;
@@ -76,26 +127,104 @@ public class Success {
         }
     }
     
+    /**
+     * Internal method to check for critical success.
+     * 
+     * @param rollResult
+     *            The final sum of the dice pool roll and modifiers.
+     * @return true if its a critical success, false otherwise.
+     */
+    private boolean isCriticalSuccess(Integer rollResult) {
+        return ((rollResult == 3) || (rollResult == 4)
+                || ((rollResult == 5) && (level == 15)) || ((rollResult <= 6) && (level >= 16)));
+    }
+    
+    /**
+     * Internal method to check for critical failure.
+     * 
+     * @param rollResult
+     *            The final sum of the dice pool roll and modifiers.
+     * @return true if its a critical failure, false otherwise.
+     */
+    private boolean isCriticalFailure(Integer rollResult) {
+        return ((rollResult == 18) || (rollResult == 17 && level <= 15) || (rollResult >= (level + 10)));
+    }
+    
+    /**
+     * Internal method to check for a common failure.
+     * 
+     * @param rollResult
+     *            The final sum of the dice pool roll and modifiers.
+     * @return true if its a common failure, false otherwise.
+     */
+    private boolean isFailure(Integer rollResult) {
+        return (((rollResult == 17) && (level >= 16)) || rollResult > level);
+    }
+    
+    /**
+     * Internal method to check for a common success.
+     * 
+     * @param rollResult
+     *            The final sum of the dice pool roll and modifiers.
+     * @return true if its a common success, false otherwise.
+     */
+    private boolean isSuccess(Integer rollResult) {
+        return (rollResult <= level);
+    }
+    
+    /**
+     * Retrieve a copy of the roll.
+     * 
+     * @return A clone of the roll instance.
+     */
     public Roll getRoll() {
         return (Roll) roll.clone();
     }
     
+    /**
+     * Return the success level.
+     * 
+     * @return The state of the success.
+     * @see SuccessLevel
+     */
     public SuccessLevel getSuccessLevel() {
         return successLevel;
     }
     
+    /**
+     * Check for success or failure.
+     * 
+     * @return true if success, false if failure.
+     */
     public Boolean isSuccessful() {
         return isSuccessful;
     }
     
+    /**
+     * Retrieve the level it was tested.
+     * 
+     * @return The level value.
+     */
     public Integer getLevel() {
         return new Integer(level);
     }
     
+    /**
+     * Check if is permited to test against a level bellow 3.
+     * 
+     * @return true if is permited to test againts a level bellow 3, false
+     *         otherwise.
+     */
     public boolean allowLowLevel() {
         return allowLowLevel;
     }
     
+    /**
+     * Configure if the success can be tested against a level bellow 3.
+     * 
+     * @param allowLowLevel
+     *            The new permission.
+     */
     public void setAllowLowLevel(boolean allowLowLevel) {
         this.allowLowLevel = allowLowLevel;
         setSuccess();

@@ -19,10 +19,18 @@ import net.giganerds.guruha.rolls.Success;
 import org.junit.Test;
 
 /**
+ * A test for success rools. It test all range of dice roll against a level from
+ * 1 to 20.
+ * 
  * @author Valter Douglas "GigaNERDs" Lisboa Jr.
  */
 public class SuccessTests {
     
+    /**
+     * The test root. Generate all dice roll possibilities and test it against a
+     * range of levels from 1 to 20. Values bellow 3 are tested with and without
+     * allowlowlevel.
+     */
     @Test
     public void testSuccessByArbitraryRoll() {
         int idx = 0;
@@ -47,6 +55,12 @@ public class SuccessTests {
         assertTrue(true);
     }
     
+    /**
+     * Checks for a good success result.
+     * 
+     * @param success
+     *            The succes instance to be checked.
+     */
     private void assertSuccess(Success success) {
         // First some sanity checks
         Roll roll = success.getRoll();
@@ -59,6 +73,7 @@ public class SuccessTests {
         assertNotNull("Success level cannot be null", successLevel);
         Integer rollResult = roll.getResult();
         
+        // Uncomment this for test output.
         // System.out.println("Result = " + rollResult + "; Level = " + level
         // + "; Success = " + isSuccessful + "; Status = " + successLevel
         // + "; Allow low level = " + success.allowLowLevel());

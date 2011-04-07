@@ -73,7 +73,7 @@
 			<manifest>
 			</manifest>
 	        </jar>
-	        <junit printsummary="off">
+	        <junit printsummary="no">
 			<classpath>
 				<path refid="build-classpath"/>
 				<path refid="application-classpath"/>
