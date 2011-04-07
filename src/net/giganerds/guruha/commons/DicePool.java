@@ -32,6 +32,7 @@ public class DicePool {
      * 
      * @param dicePoolString
      *            A string representing a dice pool.
+     * @return true if the string is well formed, false otherwise.
      */
     public static boolean checkDicePoolString(String dicePoolString) {
         return dicePoolString
