@@ -8,7 +8,8 @@
 	<property name="tests.src.dir" value="tests" />
 	<property name="tests.build.dir" value="tests-build" />
 
-	<property name="jar.version" value="0.0.1alpha" />
+	<!-- If you change this, modify Version.java too. -->
+	<property name="jar.version" value="0.0.1-alpha" />
 	<property name="jar.file" value="${ant.project.name}-${jar.version}.jar" />
 
 	<path id="build-classpath">
