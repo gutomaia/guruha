@@ -36,7 +36,7 @@ public class Version {
     
     /**
      * Append to show the current state of development. This probably will be
-     * alpha, beta or rc.
+     * alpha, beta or rcn.
      */
     static final public String STATE         = "alpha";
     
