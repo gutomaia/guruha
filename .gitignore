@@ -1,6 +1,8 @@
 .classpath
+.externalToolBuilders
 .gitignore
 .project
+.settings
 bin
 build
 dist
