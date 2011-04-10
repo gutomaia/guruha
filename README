@@ -5,6 +5,15 @@ abstract the GURPS rules, intented to be used in programs capables to aid any
 kind of GM or player to build up adventures, characters, roll dices, simulate 
 GURPS combat, play on-line, etc.
 
+GURPS is a trademark of Steve Jackson Games, and its rules and art are 
+copyrighted by Steve Jackson Games . All rights are reserved by Steve Jackson 
+Games. This game aid is the original creation of Valter Douglas Lisbôa Jr. and 
+is released for free distribution, and not for resale, under the permissions 
+granted in the <a href="http://www.sjgames.com/general/online_policy.html">Steve 
+Jackson Games Online Policy</a>.
+
+GURUHA is under GPL license. See the COPYING file.
+
 The current version is on alpha release and have a few features yet.
 
 - To build the jar, run ant dist
