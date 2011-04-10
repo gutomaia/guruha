@@ -10,4 +10,4 @@ The current version is on alpha release and have a few features yet.
 - To build the jar, run ant dist
 - To run the test suit, run ant tests
 - To build the javadoc, run ant docs
-- To build, make the tests and create javadoc, run ant all.
+- To build, make the tests, build the jar and create javadoc, run ant all.

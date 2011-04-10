@@ -1,91 +1,96 @@
 <project name="guruha" basedir="." default="dist">
 
-	<property name="src.dir" value="src"/>
-	<property name="build.dir" value="build"/>
-	<property name="dist.dir" value="dist"/>
-	<property name="lib.dir" value="lib"/>
-	<property name="doc.dir" value="javadoc"/>
-	<property name="tests.src.dir" value="tests"/>
-	<property name="tests.build.dir" value="tests-build"/>
-	<property name="tests.jar.dir"  value="tests-jar"/>
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="build" />
+	<property name="dist.dir" value="dist" />
+	<property name="lib.dir" value="lib" />
+	<property name="doc.dir" value="javadoc" />
+	<property name="tests.src.dir" value="tests" />
+	<property name="tests.build.dir" value="tests-build" />
 
-	<property name="jar.version" value="0.0.1alpha"/>
-	<property name="jar.file" value="${ant.project.name}-${jar.version}.jar"/>
-	<property name="tests.jar.file" value="tests-${ant.project.name}-${jar.version}.jar"/>
+	<property name="jar.version" value="0.0.1alpha" />
+	<property name="jar.file" value="${ant.project.name}-${jar.version}.jar" />
 
 	<path id="build-classpath">
-        	<fileset dir="${lib.dir}" includes="**/*.jar"/>
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
 	</path>
 
-	<path id="application-classpath">
-        	<fileset dir="${dist.dir}" includes="**/*.jar"/>
+	<path id="tdd-classpath">
+		<pathelement location="${build.dir}" />
 	</path>
 
 	<path id="tests-classpath">
-        	<fileset dir="${tests.jar.dir}" includes="**/*.jar"/>
+		<pathelement location="${tests.build.dir}" />
 	</path>
 
 	<target name="clean">
-        	<delete dir="${build.dir}"/>
-        	<delete dir="${dist.dir}"/>
-        	<delete dir="${tests.build.dir}"/>
-        	<delete dir="${tests.jar.dir}"/>
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+		<delete dir="${tests.build.dir}" />
 	</target>
 
 	<target name="clean-docs">
-        	<delete dir="${doc.dir}"/>
+		<delete dir="${doc.dir}" />
 	</target>
 
 	<target name="compile" depends="clean">
-	        <mkdir dir="${build.dir}"/>
-		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}" classpathref="build-classpath"/>
+		<mkdir dir="${build.dir}" />
+		<javac includeantruntime="false"
+		       srcdir="${src.dir}"
+		       destdir="${build.dir}"
+		       classpathref="build-classpath"
+		/>
 	</target>
 
 	<target name="dist" depends="compile">
-        	<mkdir dir="${dist.dir}"/>
-	        <jar destfile="${dist.dir}/${jar.file}" basedir="${build.dir}">
+		<mkdir dir="${dist.dir}" />
+		<jar destfile="${dist.dir}/${jar.file}" basedir="${build.dir}">
 			<manifest>
-				<attribute name="Implementation-Title" value="${ant.project.name}"/>
-				<attribute name="Implementation-Version" value="${jar.version}"/>
-				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Implementation-Title"
+				           value="${ant.project.name}"
+				/>
+				<attribute name="Implementation-Version"
+				           value="${jar.version}"
+				/>
+				<attribute name="Built-By" value="${user.name}" />
 
 			</manifest>
-	        </jar>
+		</jar>
 	</target>
 
 	<target name="docs" depends="clean-docs">
-	        <mkdir dir="${doc.dir}"/>
+		<mkdir dir="${doc.dir}" />
 		<javadoc destdir="${doc.dir}" Author="yes" Private="yes">
-			<fileset dir="${src.dir}"/>
+			<fileset dir="${src.dir}" />
 		</javadoc>
 	</target>
 
-	<target name="tests" depends="dist">
-	        <mkdir dir="${tests.build.dir}"/>
-	        <mkdir dir="${tests.jar.dir}"/>
-		<javac includeantruntime="false" srcdir="${tests.src.dir}" destdir="${tests.build.dir}">
+	<target name="tests" depends="compile">
+		<mkdir dir="${tests.build.dir}" />
+
+		<javac includeantruntime="false"
+		       srcdir="${tests.src.dir}"
+		       destdir="${tests.build.dir}"
+		>
 			<classpath>
-				<path refid="build-classpath"/>
-				<path refid="application-classpath"/>
+				<path refid="build-classpath" />
+				<path refid="tdd-classpath" />
 			</classpath>
 		</javac>
-	        <jar destfile="${tests.jar.dir}/${tests.jar.file}" basedir="${tests.build.dir}">
-			<manifest>
-			</manifest>
-	        </jar>
-	        <junit printsummary="no">
+
+		<junit printsummary="no">
 			<classpath>
-				<path refid="build-classpath"/>
-				<path refid="application-classpath"/>
-				<path refid="tests-classpath"/>
+				<path refid="build-classpath" />
+				<path refid="tdd-classpath" />
+				<path refid="tests-classpath" />
 			</classpath>
+            <formatter type="brief" usefile="false" />
 			<batchtest fork="yes">
-				<formatter type="plain" usefile="false"/>
-		                <fileset dir="${tests.build.dir}"/>
-		        </batchtest>
-	        </junit>
+				<fileset dir="${tests.build.dir}" />
+			</batchtest>
+		</junit>
 	</target>
 
-	<target name="all" depends="tests,docs"/>
+	<target name="all" depends="dist,tests,docs" />
 
 </project>
