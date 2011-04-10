@@ -42,12 +42,12 @@ public class DicePool {
     /**
      * If not specified, the default number of dices in a pool is 3.
      */
-    private final Integer DEFAULT_DICES     = 3;
+    private final Integer   DEFAULT_DICES     = 3;
     
     /**
      * If not specified, the default modifiers in a pool is 0.
      */
-    private final Integer DEFAULT_MODIFIERS = 0;
+    private final Integer   DEFAULT_MODIFIERS = 0;
     
     /**
      * GURPS only uses six-faced dices.
@@ -55,17 +55,17 @@ public class DicePool {
      * This is useful when you need do make arithmetics with dices.
      * </p>
      */
-    public final int      FACES             = 6;
+    public final static int FACES             = 6;
     
     /**
      * Stores the number of dices in a pool.
      */
-    private final Integer dices;
+    private final Integer   dices;
     
     /**
      * Stores the modifiers in a pool.
      */
-    private final Integer modifiers;
+    private final Integer   modifiers;
     
     /**
      * Creates a default "3d" dice pool.

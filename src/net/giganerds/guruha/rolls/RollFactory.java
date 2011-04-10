@@ -10,7 +10,11 @@
  */
 package net.giganerds.guruha.rolls;
 
+import net.giganerds.guruha.commons.DicePool;
+
 /**
+ * This class is a set of statics methods to make all types of roll.
+ * 
  * @author Valter Douglas "GigaNERDs" Lisboa Jr.
  */
 public abstract class RollFactory {
@@ -22,14 +26,24 @@ public abstract class RollFactory {
         
     }
     
-    public static Success successRoll(Integer level) {
-        return successRoll(level, false);
-    }
-    
+    /**
+     * Make a success roll.
+     * 
+     * @param level
+     *            The level to be rolled against.
+     * @param allowLowLevel
+     *            If is permitted tests against 2 or less.
+     * @return The success roll.
+     */
     public static Success successRoll(Integer level, Boolean allowLowLevel) {
         return new Success(level, roll3Dice(), allowLowLevel);
     }
     
+    /**
+     * Roll 3 six-faced dices.
+     * 
+     * @return The result of the roll.
+     */
     private static Roll roll3Dice() {
         Roll roll = new Roll();
         roll.addDiceRoll(roolDice());
@@ -39,8 +53,13 @@ public abstract class RollFactory {
         return roll;
     }
     
+    /**
+     * Roll a six faced dice.
+     * 
+     * @return The result of the dice roll.
+     */
     private static Integer roolDice() {
-        return new Integer((int) (Math.random() * 6) + 1);
+        return new Integer((int) (Math.random() * DicePool.FACES) + 1);
     }
     
 }

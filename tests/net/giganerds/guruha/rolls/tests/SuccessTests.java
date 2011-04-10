@@ -57,7 +57,7 @@ public class SuccessTests {
      * Checks for a good success result.
      * 
      * @param success
-     *            The succes instance to be checked.
+     *            The success instance to be checked.
      */
     private void assertSuccess(Success success) {
         // First some sanity checks
