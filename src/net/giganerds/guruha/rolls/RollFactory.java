@@ -26,15 +26,11 @@ public abstract class RollFactory {
         return successRoll(level, false);
     }
     
-    public static Success successRoll(Integer level, boolean allowLowLevel) {
-        Success success = new Success(level, roll3D());
-        if (allowLowLevel)
-            success.setAllowLowLevel(allowLowLevel);
-        
-        return success;
+    public static Success successRoll(Integer level, Boolean allowLowLevel) {
+        return new Success(level, roll3Dice(), allowLowLevel);
     }
     
-    private static Roll roll3D() {
+    private static Roll roll3Dice() {
         Roll roll = new Roll();
         roll.addDiceRoll(roolDice());
         roll.addDiceRoll(roolDice());

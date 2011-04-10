@@ -22,12 +22,12 @@ public class Success {
     /**
      * Global for a success roll.
      */
-    private final static boolean SUCCESSFUL    = true;
+    private final static boolean SUCCESSFUL   = true;
     
     /**
      * Global for a failed roll.
      */
-    private final static boolean UNSUCCESSFUL  = false;
+    private final static boolean UNSUCCESSFUL = false;
     
     /**
      * The level to be tested against.
@@ -42,17 +42,17 @@ public class Success {
     /**
      * If is permited roll in levels less than 3.
      */
-    private boolean              allowLowLevel = false;
+    private final Boolean        allowLowLevel;
     
     /**
      * If it was well succeed or not.
      */
-    private Boolean              isSuccessful  = null;
+    private Boolean              isSuccessful = null;
     
     /**
      * The success level class.
      */
-    private SuccessLevel         successLevel  = null;
+    private SuccessLevel         successLevel = null;
     
     /**
      * Creates a new success.
@@ -61,10 +61,13 @@ public class Success {
      *            The level to be tested against.
      * @param roll
      *            The dice roll and modifiers.
+     * @param allowLowLevel
+     *            If the level can be less than 3.
      */
-    public Success(Integer level, Roll roll) {
+    public Success(Integer level, Roll roll, Boolean allowLowLevel) {
         this.level = level;
         this.roll = roll;
+        this.allowLowLevel = allowLowLevel;
         setSuccess();
     }
     
@@ -217,17 +220,6 @@ public class Success {
      */
     public boolean allowLowLevel() {
         return allowLowLevel;
-    }
-    
-    /**
-     * Configure if the success can be tested against a level bellow 3.
-     * 
-     * @param allowLowLevel
-     *            The new permission.
-     */
-    public void setAllowLowLevel(boolean allowLowLevel) {
-        this.allowLowLevel = allowLowLevel;
-        setSuccess();
     }
     
 }

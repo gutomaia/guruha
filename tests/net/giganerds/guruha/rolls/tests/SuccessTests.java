@@ -43,11 +43,9 @@ public class SuccessTests {
                         roll.addDiceRoll(roll2);
                         roll.addDiceRoll(roll3);
                         
-                        Success success = new Success(level, roll);
-                        assertSuccess(success);
+                        assertSuccess(new Success(level, roll, false));
                         if (level < 3) {
-                            success.setAllowLowLevel(true);
-                            assertSuccess(success);
+                            assertSuccess(new Success(level, roll, true));
                         }
                         
                         idx++;
